@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Event struct {
 	IP   string
 	Type string
@@ -29,4 +31,14 @@ func ThreatEngineBasic(e Event) Alert {
 	}
 }
 
-func main() {}
+func main() {
+	e := Event{
+		IP:   "192.168.1.50",
+		Type: "SSH_LOGIN_FAIL",
+	}
+
+	alert := ThreatEngineBasic(e)
+
+	fmt.Println("Attack Detected!!")
+	fmt.Println(alert)
+}
