@@ -76,6 +76,18 @@ func ReadFromDB(db *sql.DB) error {
 }
 
 func main() {
+	db, err := sql.Open("sqlite", "alerts.db")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	defer db.Close()
+
+	if err := CreateTable(db); err != nil {
+		panic(err)
+	}
+
 	e := Event{
 		IP:   "192.168.1.50",
 		Type: "SSH_LOGIN_FAIL",
@@ -83,6 +95,10 @@ func main() {
 
 	alert := ThreatEngineBasic(e)
 
+	if err := SaveToDB(db, alert); err != nil {
+		panic(err)
+	}
+
 	fmt.Println("Attack Detected!!")
-	fmt.Println(alert)
+	ReadFromDB(db)
 }
