@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "modernc.org/sqlite"
 )
@@ -40,9 +41,15 @@ func CreateTable(db *sql.DB) error {
 	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS ALERT(id INTEGER PRIMARY KEY AUTOINCREMENT,
 		source_ip TEXT,
 		severity TEXT,
-		message TEXT,
+		type TEXT,
 		created_at TEXT);`)
 
+	return err
+
+}
+
+func SaveToDB(db *sql.DB, a Alert) error {
+	_, err := db.Exec("INSERT INTO ALERT (source_ip,severity,type,created_at) VALUES(?,?,?,?)", a.IP, a.Severity, a.Type, time.Now().Format(time.RFC3339))
 	return err
 
 }
