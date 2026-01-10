@@ -5,4 +5,10 @@ type Event struct {
 	Type string
 }
 
+type Alert struct {
+	IP       string
+	Severity string
+	Type     string
+}
+
 func main() {}
