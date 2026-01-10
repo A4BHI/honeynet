@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"database/sql"
+	"fmt"
+
+	_ "modernc.org/sqlite"
+)
 
 type Event struct {
 	IP   string
@@ -29,6 +34,17 @@ func ThreatEngineBasic(e Event) Alert {
 		Severity: "LOW",
 		Type:     "UNKNOWN",
 	}
+}
+
+func CreateTable(db *sql.DB) error {
+	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS ALERT(id INTEGER PRIMARY KEY AUTOINCREMENT,
+		source_ip TEXT,
+		severity TEXT,
+		message TEXT,
+		created_at TEXT);`)
+
+	return err
+
 }
 
 func main() {
