@@ -56,7 +56,7 @@ func SaveToDB(db *sql.DB, a Alert) error {
 
 func ReadFromDB(db *sql.DB) error {
 	rows, err := db.Query(
-		`SELECT id, source_ip, severity, message, created_at FROM alerts`,
+		`SELECT id, source_ip, severity, type, created_at FROM alert`,
 	)
 	if err != nil {
 		return err
