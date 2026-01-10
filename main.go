@@ -54,6 +54,27 @@ func SaveToDB(db *sql.DB, a Alert) error {
 
 }
 
+func ReadFromDB(db *sql.DB) error {
+	rows, err := db.Query(
+		`SELECT id, source_ip, severity, message, created_at FROM alerts`,
+	)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var id int
+		var ip, sev, msg, created string
+
+		rows.Scan(&id, &ip, &sev, &msg, &created)
+
+		fmt.Println(id, ip, sev, msg, created)
+	}
+	return nil
+
+}
+
 func main() {
 	e := Event{
 		IP:   "192.168.1.50",
