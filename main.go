@@ -22,7 +22,11 @@ func ThreatEngineBasic(e Event) Alert {
 		return alert
 	}
 
-	return Alert{}
+	return Alert{
+		IP:       e.IP,
+		Severity: "LOW",
+		Type:     "UNKNOWN",
+	}
 }
 
 func main() {}
