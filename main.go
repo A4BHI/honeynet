@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	_ "modernc.org/sqlite"
 )
 
@@ -100,6 +101,14 @@ func main() {
 
 	if err := SaveToDB(db, alert); err != nil {
 		panic(err)
+	}
+
+	r := gin.Default()
+
+	api := r.Group("/api")
+	{
+		api.GET("/alerts")
+		api.POST("/alerts/:id/block")
 	}
 
 	fmt.Println("Attack Detected!!")
