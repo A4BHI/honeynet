@@ -20,6 +20,14 @@ type Alert struct {
 	Type     string
 }
 
+type AlertRow struct {
+	ID         int    `json:"id"`
+	IP         string `json:"ip"`
+	Type       string `json:"type"`
+	Severity   string `json:"severity"`
+	Created_At string `json:"created_at"`
+}
+
 var db *sql.DB
 
 func ThreatEngineBasic(e Event) Alert {
@@ -78,6 +86,9 @@ func ReadFromDB(db *sql.DB) error {
 
 }
 
+func Alerts() {
+
+}
 func main() {
 	var err error
 	db, err = sql.Open("sqlite", "alerts.db")
