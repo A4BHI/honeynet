@@ -136,10 +136,13 @@ func main() {
 
 	api := r.Group("/api")
 	{
-		api.GET("/alerts")
+		api.GET("/alerts", getAlerts)
 		api.POST("/alerts/:id/block")
 	}
 
 	fmt.Println("Attack Detected!!")
 	ReadFromDB(db)
+
+	fmt.Println("GIN SERVER STARTED!!")
+	r.Run(":8080")
 }
