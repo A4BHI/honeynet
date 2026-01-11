@@ -86,7 +86,15 @@ func ReadFromDB(db *sql.DB) error {
 
 }
 
-func Alerts() {
+func getAlerts(c *gin.Context) {
+
+	var alerts []AlertRow
+
+	rows, err := db.Query("SELECT id,source_ip,severity,type,created_at FROM ALERT ORDER BY id DESC")
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
 
 }
 func main() {
