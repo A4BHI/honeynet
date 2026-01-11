@@ -19,6 +19,8 @@ type Alert struct {
 	Type     string
 }
 
+var db *sql.DB
+
 func ThreatEngineBasic(e Event) Alert {
 	if e.Type == "SSH_LOGIN_FAIL" {
 		alert := Alert{
@@ -76,7 +78,8 @@ func ReadFromDB(db *sql.DB) error {
 }
 
 func main() {
-	db, err := sql.Open("sqlite", "alerts.db")
+	var err error
+	db, err = sql.Open("sqlite", "alerts.db")
 	if err != nil {
 		fmt.Println(err)
 		return
