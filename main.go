@@ -96,6 +96,16 @@ func getAlerts(c *gin.Context) {
 		return
 	}
 
+	defer rows.Close()
+
+	for rows.Next() {
+		var a AlertRow
+		rows.Scan(&a.ID, &a.IP, &a.Severity, &a.Type, &a.Created_At)
+		alerts = append(alerts, a)
+	}
+
+	c.JSON(200, alerts)
+
 }
 func main() {
 	var err error
