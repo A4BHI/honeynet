@@ -118,8 +118,9 @@ func BlockIP(c *gin.Context) {
 		return
 	}
 
-	if severity != "HIGH" {
+	if severity == "HIGH" {
 		c.JSON(200, gin.H{"ID": id, "IP": ip, "RESPONSE": "IP BLOCKED"})
+		return
 	}
 
 }
