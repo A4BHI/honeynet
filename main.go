@@ -112,7 +112,7 @@ func BlockIP(c *gin.Context) {
 	id := c.Param("id")
 	var alertid int
 	var severity, ip string
-	err := db.QueryRow("select id,severity,ip from alert where id = ?", id).Scan(&alertid, &severity, &id)
+	err := db.QueryRow("select id,severity,source_ip from alert where id = ?", id).Scan(&alertid, &severity, &ip)
 	if err == sql.ErrNoRows {
 		c.JSON(500, gin.H{"error": "no alerts found"})
 		return
@@ -155,7 +155,7 @@ func main() {
 	api := r.Group("/api")
 	{
 		api.GET("/alerts", getAlerts)
-		api.POST("/alerts/:id/block")
+		api.POST("/alerts/:id/block", BlockIP)
 	}
 
 	fmt.Println("Attack Detected!!")
