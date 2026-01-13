@@ -107,6 +107,12 @@ func getAlerts(c *gin.Context) {
 	c.JSON(200, alerts)
 
 }
+
+func BlockIP(c *gin.Context) {
+	id := c.Param("id")
+
+	db.Query("select id,severity from alert where id = ?", id)
+}
 func main() {
 	var err error
 	db, err = sql.Open("sqlite", "alerts.db")
