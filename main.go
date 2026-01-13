@@ -110,8 +110,9 @@ func getAlerts(c *gin.Context) {
 
 func BlockIP(c *gin.Context) {
 	id := c.Param("id")
-
-	db.Query("select id,severity from alert where id = ?", id)
+	var alertid int
+	var severity string
+	db.QueryRow("select id,severity from alert where id = ?", id).Scan(&alertid, &severity)
 }
 func main() {
 	var err error
