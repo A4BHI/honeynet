@@ -112,8 +112,14 @@ func BlockIP(c *gin.Context) {
 	id := c.Param("id")
 	var alertid int
 	var severity string
-	db.QueryRow("select id,severity from alert where id = ?", id).Scan(&alertid, &severity)
+	err := db.QueryRow("select id,severity from alert where id = ?", id).Scan(&alertid, &severity)
+	if err == sql.ErrNoRows {
+		c.JSON(500, gin.H{"error": "no alerts found"})
+		return
+	}
+
 }
+
 func main() {
 	var err error
 	db, err = sql.Open("sqlite", "alerts.db")
