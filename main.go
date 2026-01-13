@@ -111,11 +111,15 @@ func getAlerts(c *gin.Context) {
 func BlockIP(c *gin.Context) {
 	id := c.Param("id")
 	var alertid int
-	var severity string
-	err := db.QueryRow("select id,severity from alert where id = ?", id).Scan(&alertid, &severity)
+	var severity, ip string
+	err := db.QueryRow("select id,severity,ip from alert where id = ?", id).Scan(&alertid, &severity, &id)
 	if err == sql.ErrNoRows {
 		c.JSON(500, gin.H{"error": "no alerts found"})
 		return
+	}
+
+	if severity != "HIGH" {
+		c.JSON(200, gin.H{"ID": id, "IP": ip, "RESPONSE": "IP BLOCKED"})
 	}
 
 }
