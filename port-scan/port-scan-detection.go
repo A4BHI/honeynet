@@ -11,7 +11,11 @@ func AcceptConnRequest() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ln.Accept()
-	ip := ln.Addr().String()
-	fmt.Println(ip)
+	conn, err := ln.Accept()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	adr := conn.RemoteAddr()
+	fmt.Print(adr)
 }
