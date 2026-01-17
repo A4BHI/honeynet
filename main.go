@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	portscan "honeynet/port-scan"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -163,4 +164,6 @@ func main() {
 
 	fmt.Println("GIN SERVER STARTED!!")
 	r.Run(":8080")
+
+	portscan.AcceptConnRequest()
 }
