@@ -161,9 +161,8 @@ func main() {
 
 	fmt.Println("Attack Detected!!")
 	ReadFromDB(db)
-
+	go portscan.AcceptConnRequest()
 	fmt.Println("GIN SERVER STARTED!!")
 	r.Run(":8080")
 
-	portscan.AcceptConnRequest()
 }

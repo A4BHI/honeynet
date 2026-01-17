@@ -25,5 +25,5 @@ func AcceptConnRequest() {
 	}
 	fmt.Println("IP:", ip)
 	fmt.Println("PORT:", port)
-	fmt.Print(adr)
+
 }
