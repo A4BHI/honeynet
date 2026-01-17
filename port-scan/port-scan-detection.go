@@ -17,5 +17,11 @@ func AcceptConnRequest() {
 	}
 
 	adr := conn.RemoteAddr()
+	ip, port, err := net.SplitHostPort(adr.String())
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("IP:", ip)
+	fmt.Println("PORT:", port)
 	fmt.Print(adr)
 }
